@@ -1,0 +1,102 @@
+version: '3.3'  # version of compose format
+
+services:
+  landing-service:
+    build: ./landing  # path is relative to docker-compose.yml location
+    hostname: landing-service
+    ports:
+      - 5050:5050  # host:container
+    depends_on:
+      - add-service
+      - subtract-service
+      - multiply-service
+      - divide-service
+      - gcd-service
+      - lcm-service
+      - modulus-service
+    environment:
+      ADD_HOST: add-service 
+      SUBTRACT_HOST: subtract-service
+      MULTIPLY_HOST: multiply-service
+      DIVIDE_HOST: divide-service
+      GCD_HOST: gcd-service
+      LCM_HOST: lcm-service
+      MODULUS_HOST: modulus-service
+    networks:
+      sample:
+        aliases:
+          - landing-service
+  # Add more services below
+
+  add-service:
+    build: ./addHelper
+    hostname: add-helper
+    ports:
+      - 8000:8000
+    networks:
+      sample:
+        aliases:
+          - add-service
+
+  subtract-service:
+    build: ./subtracthelper
+    hostname: subtract-helper
+    ports:
+      - 8001:8001
+    networks:
+      sample:
+        aliases:
+          - subtract-service
+  multiply-service:
+    build: ./multiplyhelper
+    hostname: multiply-helper
+    ports:
+      - 8002:8002
+    networks:
+      sample:
+        aliases:
+          - multiply-service
+
+  divide-service:
+    build: ./dividehelper
+    hostname: divide-helper
+    ports:
+      - 8003:8003
+    networks:
+      sample:
+        aliases:
+          - divide-service
+
+  gcd-service:
+    build: ./gcdhelper
+    hostname: gcd-helper
+    ports:
+      - 8004:8004
+    networks:
+      sample:
+        aliases:
+          - gcd-service
+  
+  lcm-service:
+    build: ./lcmhelper
+    hostname: lcm-helper
+    ports:
+      - 8005:8005
+    networks:
+      sample:
+        aliases:
+          - lcm-service
+  
+  modulus-service:
+    build: ./modulushelper
+    hostname: modulus-helper
+    ports:
+      - 8006:8006
+    networks:
+      sample:
+        aliases:
+          - modulus-service
+
+
+networks:
+  sample:
